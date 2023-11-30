@@ -1,8 +1,8 @@
-name: Deploy Application Youtube
+name: Deploy application
 
 on:
     push:
-        branches: [docker]
+        branches: [main]
 
 jobs:
     build:
