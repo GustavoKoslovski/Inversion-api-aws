@@ -25,24 +25,24 @@ jobs:
             - name: Push image docker
               run: docker push khensane/inversion
               
-    deploy:
-        needs: build
-        runs-on: ubuntu-latest
-        steps:
-            - name: Install Ansible
-              run: sudo apt-get update && sudo apt-get install -y ansible
+    # deploy:
+    #     needs: build
+    #     runs-on: ubuntu-latest
+    #     steps:
+    #         - name: Install Ansible
+    #           run: sudo apt-get update && sudo apt-get install -y ansible
 
-            - name: Create Ansible Inventory
-              run: echo "[ec2]\n<ec2_instance_public_ip>" > inventory.ini
+    #         - name: Create Ansible Inventory
+    #           run: echo "[ec2]\n<ec2_instance_public_ip>" > inventory.ini
               
-            - name: Deploy using Ansible
-              run: |
-                sed -e "s/{{ secrets.DATABASE_USERNAME }}/${{ secrets.DATABASE_USERNAME }}/g" \
-                    -e "s/{{ secrets.DATABASE_PASSWORD }}/${{ secrets.DATABASE_PASSWORD }}/g" \
-                    -e "s/{{ secrets.DATABASE_URL }}/${{ secrets.DATABASE_URL }}/g" \
-                    your_ansible_playbook.yml > playbook_with_secrets.yml
-                ansible-playbook -i inventory.ini playbook_with_secrets.yml
-              env:
-                AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
-                AWS_SECRET_ACCESS_KEY: ${{secrets.SECRET_ACCESS_KEY}}
-                ANSIBLE_HOST_KEY_CHECKING: False
+    #         - name: Deploy using Ansible
+    #           run: |
+    #             sed -e "s/{{ secrets.DATABASE_USERNAME }}/${{ secrets.DATABASE_USERNAME }}/g" \
+    #                 -e "s/{{ secrets.DATABASE_PASSWORD }}/${{ secrets.DATABASE_PASSWORD }}/g" \
+    #                 -e "s/{{ secrets.DATABASE_URL }}/${{ secrets.DATABASE_URL }}/g" \
+    #                 your_ansible_playbook.yml > playbook_with_secrets.yml
+    #             ansible-playbook -i inventory.ini playbook_with_secrets.yml
+    #           env:
+    #             AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+    #             AWS_SECRET_ACCESS_KEY: ${{secrets.SECRET_ACCESS_KEY}}
+    #             ANSIBLE_HOST_KEY_CHECKING: False
