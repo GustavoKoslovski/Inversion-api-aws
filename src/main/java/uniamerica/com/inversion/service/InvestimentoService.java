@@ -96,6 +96,9 @@ public class InvestimentoService {
 //        }
 //    }
 
+
+// teste push
+
     public Boolean isInvestimentoExist(Investimento investimento, Usuario usuario) {
         if (investimento.getNomeInvestimento() == null || investimento.getNomeInvestimento().isEmpty()) {
             throw new RuntimeException("O nome do investimento não foi fornecido, favor inserir um nome.");
