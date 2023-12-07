@@ -8,7 +8,7 @@
       apt:
         update_cache: yes
 
-     - name: Instalar dependências do Docker
+    - name: Instalar dependências do Docker
       apt:
         name:
           - apt-transport-https
