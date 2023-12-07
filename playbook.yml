@@ -53,7 +53,7 @@
         state: absent
       ignore_errors: yes
 
-    - name: Executar docker-compose up
+  - name: Executar docker-compose up
       hosts: servidores
       become: yes
       tasks:
