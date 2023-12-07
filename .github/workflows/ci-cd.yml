@@ -32,11 +32,14 @@ jobs:
           run: sudo apt-get update && sudo apt-get install -y ansible
     
         - name: Print Working Directory
-          run: ls /home/runner/work/Inversion-api-aws
+          run: ls 
     
         - name: List Contents of Ansible Directory
-          run: ls Inversion-api-aws/ansible
-    
+          run: ls /home
+
+        - name: List Contents of Ansible Directory
+          run: ls /home/runner
+
         - name: Create Ansible Inventory
           run: echo "[ec2]\n54.221.110.227" > inventory.ini
     
