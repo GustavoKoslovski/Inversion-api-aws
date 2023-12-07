@@ -35,13 +35,13 @@ jobs:
           run: pwd
     
         - name: List Contents of Ansible Directory
-          run: ls ../../ansible
+          run: ls /ansible
     
         - name: Create Ansible Inventory
           run: echo "[ec2]\n54.221.110.227" > inventory.ini
     
         - name: Deploy using Ansible
-          run: ansible-playbook -i inventory.ini ../../ansible/playbook.yml
+          run: ansible-playbook -i inventory.ini /home/runner/work/Inversion-api-aws/Inversion-api-aws/ansible/playbook.yml
           env:
             AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
             AWS_SECRET_ACCESS_KEY: ${{secrets.SECRET_ACCESS_KEY}}
