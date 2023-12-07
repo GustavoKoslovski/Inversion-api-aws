@@ -36,7 +36,9 @@ jobs:
 
             - name: Deploy using Ansible
               run: |
+                ls
                 cd ansible
+                ls
                 ansible-playbook -i inventory.ini playbook.yml
               env:
                 AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
