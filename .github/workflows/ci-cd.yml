@@ -3,6 +3,8 @@ name: Deploy Application Youtube
 on:
     push:
         branches: [docker]
+env:
+  DEPLOY_KEY: ${{secrets.DEPLOY_KEY}}
 
 jobs:
     build:
@@ -28,6 +30,13 @@ jobs:
         needs: build
         runs-on: ubuntu-latest
         steps:
+            - name: Setup SSH
+              working-directory: ./
+              run: |
+                mkdir -p ~/.ssh
+                echo "$DEPLOY_KEY" > ~/.ssh/id_rsa.pem
+                chmod 600 ~/.ssh/id_rsa.pem
+                        
             - name: Install Ansible
               run: sudo apt-get update && sudo apt-get install -y ansible
 
