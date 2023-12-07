@@ -25,23 +25,20 @@ jobs:
             - name: Push image docker
               run: docker push khensane/inversion         
     deploy:
-      needs: build
-      runs-on: ubuntu-latest
-      steps:
-        - name: Install Ansible
-          run: sudo apt-get update && sudo apt-get install -y ansible
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - name: Install Ansible
+              run: sudo apt-get update && sudo apt-get install -y ansible
 
-        - name: Copy Ansible Files
-          run: cp -r /home/runner/work/Inversion-api-aws/Inversion-api-aws/ansible/* .
-    
-        - name: Create Ansible Inventory
-          run: echo "[ec2]\n54.221.110.227" > inventory.ini
-    
-        - name: Deploy using Ansible
-          run: ansible-playbook -i inventory.ini playbook.yml
-          env:
-            AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
-            AWS_SECRET_ACCESS_KEY: ${{secrets.SECRET_ACCESS_KEY}}
-            ANSIBLE_HOST_KEY_CHECKING: False
-              
-          
+            - name: Create Ansible Inventory
+              run: echo "[ec2]\n54.221.110.227" > inventory.ini
+
+            - name: Deploy using Ansible
+              run: |
+                cd ansible
+                ansible-playbook -i inventory.ini playbook.yml
+              env:
+                AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+                AWS_SECRET_ACCESS_KEY: ${{secrets.SECRET_ACCESS_KEY}}
+                ANSIBLE_HOST_KEY_CHECKING: False
