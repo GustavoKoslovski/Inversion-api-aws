@@ -52,11 +52,4 @@
         name: inversion
         state: absent
         ignore_errors: yes
-        
-    - name: Executar docker-compose up
-      tasks:
-        - name: executar docker-compose up 
-          ansible.builtin.command:
-            cmd: "docker-compose up -d"
-          args:
-            chdir: "/opt/"
+   
