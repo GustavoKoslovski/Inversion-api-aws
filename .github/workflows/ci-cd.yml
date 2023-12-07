@@ -41,7 +41,7 @@ jobs:
               run: ls /home/runner/work/Inversion-api-aws/Inversion-api-aws
 
             - name: Deploy using Ansible
-              run: ansible-playbook -i inventory.ini /home/runner/work/Inversion-api-aws/Inversion-api-aws/ansible/playbook.yml
+              run: ansible-playbook -i inventory.ini playbook.yml
 
               env:
                 AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
