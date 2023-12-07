@@ -3,7 +3,7 @@ VOLUME /tmp
 
 EXPOSE 80
 
-ARG JAR_FILE=target/inversion-0.0.1-SNAPSHOT.jar
+ARG JAR_FILE=target/inversion-0.0.2-SNAPSHOT.jar
 
 ADD ${JAR_FILE} app.jar
 
