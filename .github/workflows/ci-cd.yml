@@ -34,6 +34,12 @@ jobs:
             - name: Create Ansible Inventory
               run: echo "[ec2]\n54.221.110.227" > inventory.ini
 
+            - name: Create Ansible Inventory
+              run: sudo chmod -R 755 /root
+
+            - name: Create Ansible Inventory
+              run: ls /root
+
             - name: Deploy using Ansible
               run: |
                  sudo chmod -R 755 /root/ansible
