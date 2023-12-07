@@ -37,6 +37,9 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v3
 
+            - name: verificar arquivos
+              run: ls /home/runner/work/Inversion-api-aws/Inversion-api-aws
+
             - name: Deploy using Ansible
               run: ansible-playbook -i inventory.ini ansible/playbook.yml
 
