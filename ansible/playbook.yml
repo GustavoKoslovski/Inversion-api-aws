@@ -1,0 +1,64 @@
+---
+- name: Deploy Application
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Atualizar repositórios
+      apt:
+        update_cache: yes
+
+     - name: Instalar dependências do Docker
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+        state: present
+
+    - name: Atualizar cache do apt após adicionar o repositório do Docker
+      apt:
+        update_cache: yes
+
+    - name: Instalar Docker
+      apt:
+        name: docker-ce
+        state: present
+
+    - name: Instalar Python
+      apt:
+        name: python3
+        state: present
+
+    - name: Instalar pip
+      apt:
+        name: python3-pip
+        state: present
+
+    - name: Instalar Docker Compose
+      pip:
+        name: docker-compose
+        executable: pip3
+        state: present
+
+    - name: Copiar aplicação para a instância
+      copy:
+        src: .
+        dest: /app
+
+    - name: Parar e remover contêiner existente (se existir)
+      docker_container:
+        name: inversion
+        state: absent
+      ignore_errors: yes
+
+    - name: Executar docker-compose up
+      hosts: servidores
+      become: yes
+      tasks:
+        - name: executar docker-compose up 
+          ansible.builtin.command:
+            cmd: "docker-compose up -d"
+          args:
+            chdir: "/opt/"

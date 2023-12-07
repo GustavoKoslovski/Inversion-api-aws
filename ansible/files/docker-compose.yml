@@ -1,0 +1,22 @@
+version: '3'
+services:
+  
+  backend:
+    container_name: backend
+    image: khensane/inversion
+    ports:
+      - "8080:8080"
+    networks:
+      - application
+
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    networks:
+      - application
+
+networks:
+  application:
+    driver: bridge
