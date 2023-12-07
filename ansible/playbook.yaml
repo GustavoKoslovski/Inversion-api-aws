@@ -1,0 +1,35 @@
+---
+- name: Deploy Application
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Atualizar repositórios
+      apt:
+        update_cache: yes
+
+    # Adicione tarefas para instalação de dependências, configuração de ambiente, etc.
+
+    - name: Copiar aplicação para a instância
+      copy:
+        src: .
+        dest: /app
+
+    - name: Parar e remover contêiner existente (se existir)
+      docker_container:
+        name: inversion
+        state: absent
+      ignore_errors: yes
+
+    - name: Iniciar novo contêiner
+      docker_container:
+        name: inversion
+        image: khensane/inversion
+        ports:
+          - "8080:8080"
+        env:
+          POSTGRES_HOST: "postgres.cprcmpmnqdrb.us-east-1.rds.amazonaws.com"
+          POSTGRES_PORT: "5432"
+          POSTGRES_DB: "postgres"
+          POSTGRES_USER: "postgres"
+          POSTGRES_PASSWORD: "12345678"
