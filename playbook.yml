@@ -51,8 +51,8 @@
       docker_container:
         name: inversion
         state: absent
-      ignore_errors: yes
-
+        ignore_errors: yes
+        
     - name: Executar docker-compose up
       tasks:
         - name: executar docker-compose up 
