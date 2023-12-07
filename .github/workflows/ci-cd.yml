@@ -35,7 +35,7 @@ jobs:
           run: pwd
     
         - name: List Contents of Ansible Directory
-          run: ls /ansible
+          run: ls Inversion-api-aws/ansible
     
         - name: Create Ansible Inventory
           run: echo "[ec2]\n54.221.110.227" > inventory.ini
