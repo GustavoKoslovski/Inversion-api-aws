@@ -21,9 +21,6 @@
       apt:
         update_cache: yes
 
-    - name: Checkout code
-      uses: actions/checkout@v3
-
     - name: Instalar Docker
       apt:
         name: docker-ce
