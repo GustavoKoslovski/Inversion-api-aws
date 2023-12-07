@@ -53,9 +53,7 @@
         state: absent
       ignore_errors: yes
 
-  - name: Executar docker-compose up
-      hosts: servidores
-      become: yes
+    - name: Executar docker-compose up
       tasks:
         - name: executar docker-compose up 
           ansible.builtin.command:
