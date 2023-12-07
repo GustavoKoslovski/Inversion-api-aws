@@ -32,7 +32,7 @@ jobs:
           run: sudo apt-get update && sudo apt-get install -y ansible
     
         - name: Print Working Directory
-          run: pwd
+          run: ls /home/runner/work/Inversion-api-aws/Inversion-api-aws
     
         - name: List Contents of Ansible Directory
           run: ls Inversion-api-aws/ansible
