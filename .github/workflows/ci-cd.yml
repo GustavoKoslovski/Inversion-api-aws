@@ -84,7 +84,8 @@ jobs:
                 echo "::set-output name=instance_ip::$INSTANCE_IP"
                 echo "$INSTANCE_IP ansible_ssh_user=admin ansible_ssh_private_key_file=~/.ssh/id_rsa.pem" >> ansible/inventory.ini
                 cat ansible/inventory.ini
-                ansible-playbook -i ansible/inventory playbook.yml
+                cd ansible
+                ansible-playbook -i inventory.ini playbook.yml
               env:
                 AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
                 AWS_SECRET_ACCESS_KEY: ${{secrets.SECRET_ACCESS_KEY}}
