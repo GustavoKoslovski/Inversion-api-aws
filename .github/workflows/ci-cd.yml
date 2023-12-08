@@ -30,26 +30,63 @@ jobs:
         needs: build
         runs-on: ubuntu-latest
         steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: verificar arquivos
+              run: ls /home/runner/work/Inversion-api-aws/Inversion-api-aws
+              
+            - name: Setup terraform
+              uses: hashicorp/setup-terraform@v2.0.3
+        
+            - name: Init terraform
+              working-directory: ./
+              run: |
+                terraform init
+                
+            - name: Destroy terraform
+              working-directory: ./
+              run: |
+                terraform destroy -auto-approve
+        
             - name: Setup SSH
               working-directory: ./
               run: |
                 mkdir -p ~/.ssh
                 echo "$DEPLOY_KEY" > ~/.ssh/id_rsa.pem
                 chmod 600 ~/.ssh/id_rsa.pem
-                        
+        
+            - name: Setup Python
+              uses: actions/setup-python@v2
+              with:
+                python-version: 3.x
+        
             - name: Install Ansible
-              run: sudo apt-get update && sudo apt-get install -y ansible
-
-            - name: Checkout code
-              uses: actions/checkout@v3
-
-            - name: verificar arquivos
-              run: ls /home/runner/work/Inversion-api-aws/Inversion-api-aws
+              run: |
+                python -m pip install --upgrade pip
+                pip install ansible
+            - name: Create terraform infrastructure
+              working-directory: ./
+              run: |
+                terraform apply -auto-approve
+        
+            - name: Get Terraform Output
+              id: terraform_output
+              run: |
+                INSTANCE_IP=$(terraform output -raw public_ip)
+                echo "::set-output name=instance_ip::$INSTANCE_IP"
+                echo "[servidores]" > ansible/inventario
+                echo "$INSTANCE_IP ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa.pem" >> ansible/inventario
+                cd ansible
+                ansible-playbook -i inventario site.yml
+              shell: bash
 
             - name: Deploy using Ansible
               run: |
+                INSTANCE_IP=$(terraform output -raw public_ip)
+                echo "::set-output name=instance_ip::$INSTANCE_IP"
                 echo "[ec2]" > ansible/inventario
-                echo "3.93.167.221 ansible_ssh_user=admin ansible_ssh_private_key_file=~/.ssh/id_rsa.pem" >> ansible/inventario
+                echo "$INSTANCE_IP ansible_ssh_user=admin ansible_ssh_private_key_file=~/.ssh/id_rsa.pem" >> ansible/inventario
                 ansible-playbook -i ansible/inventario playbook.yml
 
               env:
