@@ -1,6 +1,6 @@
 ---
 - name: Deploy Application
-  hosts: all
+  hosts: ec2
   become: true
 
   tasks:
