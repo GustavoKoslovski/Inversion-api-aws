@@ -82,10 +82,10 @@ jobs:
               run: |
                 INSTANCE_IP=$(terraform output -raw public_ip)
                 echo "::set-output name=instance_ip::$INSTANCE_IP"
-                echo "[ec2]" > ansible/inventario
-                echo "$INSTANCE_IP ansible_ssh_user=admin ansible_ssh_private_key_file=~/.ssh/id_rsa.pem" >> ansible/inventario
-                cat ansible/inventario
-                ansible-playbook -i ansible/inventario playbook.yml
+                echo "[ec2]" > ansible/inventario.ini
+                echo "$INSTANCE_IP ansible_ssh_user=admin ansible_ssh_private_key_file=~/.ssh/id_rsa.pem" >> ansible/inventario.ini
+                cat ansible/inventario.ini
+                ansible-playbook -i ansible/inventario.ini playbook.yml
               env:
                 AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
                 AWS_SECRET_ACCESS_KEY: ${{secrets.SECRET_ACCESS_KEY}}
