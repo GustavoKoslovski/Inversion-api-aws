@@ -47,10 +47,10 @@ jobs:
               run: |
                 terraform init
                 
-            - name: Destroy terraform
-              working-directory: ./
-              run: |
-                terraform destroy -auto-approve
+            # - name: Destroy terraform
+            #   working-directory: ./
+            #   run: |
+            #     terraform destroy -auto-approve
         
             - name: Setup SSH
               working-directory: ./
