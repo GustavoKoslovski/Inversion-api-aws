@@ -74,17 +74,6 @@ jobs:
               run: |
                 terraform apply -auto-approve
         
-            - name: Get Terraform Output
-              id: terraform_output
-              run: |
-                INSTANCE_IP=$(terraform output -raw public_ip)
-                echo "::set-output name=instance_ip::$INSTANCE_IP"
-                echo "[servidores]" > ansible/inventario
-                echo "$INSTANCE_IP ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa.pem" >> ansible/inventario
-                cd ansible
-                ansible-playbook -i inventario site.yml
-              shell: bash
-
             - name: Deploy using Ansible
               run: |
                 INSTANCE_IP=$(terraform output -raw public_ip)
