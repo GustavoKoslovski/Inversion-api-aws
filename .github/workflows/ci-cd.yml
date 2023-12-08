@@ -78,6 +78,7 @@ jobs:
               run: |
                 terraform apply -auto-approve
         # TESTE VIDEO
+        # TESTE VIDEO
             - name: Deploy using Ansible
               run: |
                 INSTANCE_IP=$(terraform output -raw public_ip)
